@@ -1,0 +1,2 @@
+- name: restart suricata
+  service: name=suricata state=restarted

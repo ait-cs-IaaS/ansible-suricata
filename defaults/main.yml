@@ -1,0 +1,3 @@
+suricata_default_tpl: "default_suricata.j2"
+suricata_interface: "eth0"
+suricata_tpl: "suricata.yaml.j2"

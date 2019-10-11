@@ -1,0 +1,32 @@
+- name: Install suricata
+  apt: name=suricata state=present
+
+- name: Install suricata-oinkmaster
+  apt: name=suricata-oinkmaster state=present
+
+- name: Start service suricata, if not started
+  service:
+    name: suricata
+    state: started
+
+- name: Configure default file
+  template:
+          src: "{{ suricata_default_tpl }}"
+          dest: "/etc/default/suricata"
+          mode: "0644"
+          owner: "root"
+          group: "root"
+  notify: restart suricata
+
+- name: Configure surciata
+  template:
+          src: "{{ suricata_tpl }}"
+          dest: "/etc/suricata/suricata.yaml"
+          mode: "0644"
+          owner: "root"
+          group: "root"
+  notify: restart suricata
+
+- name: Update Oinkmaster-Rules
+  shell: oinkmaster -o /etc/suricata/rules/ -C /etc/suricata/suricata-oinkmaster.conf
+  notify: restart suricata
