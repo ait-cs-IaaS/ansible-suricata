@@ -1,8 +1,8 @@
 - name: Install suricata
   apt: name=suricata state=present
 
-- name: Install suricata-oinkmaster
-  apt: name=suricata-oinkmaster state=present
+#- name: Install suricata-oinkmaster
+#  apt: name=suricata-oinkmaster state=present
 
 - name: Start service suricata, if not started
   service:
@@ -27,6 +27,6 @@
           group: "root"
   notify: restart suricata
 
-- name: Update Oinkmaster-Rules
-  shell: oinkmaster -o /etc/suricata/rules/ -C /etc/suricata/suricata-oinkmaster.conf
-  notify: restart suricata
+# - name: Update Oinkmaster-Rules
+#   shell: oinkmaster -o /etc/suricata/rules/ -C /etc/suricata/suricata-oinkmaster.conf
+#   notify: restart suricata
