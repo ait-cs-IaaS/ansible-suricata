@@ -42,6 +42,7 @@ suricata_reference_config_file: /etc/suricata/reference.config
 
 suricata_log_dir: /var/log/suricata/
 
+suricata_extra_rule_files: []
 suricata_rule_files:
     - botcc.rules
     - ciarmy.rules

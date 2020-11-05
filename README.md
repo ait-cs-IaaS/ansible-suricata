@@ -24,6 +24,8 @@ suricata_tpl: "suricata.yaml.j2"
 | suricata_address_groups        | dict[string] | \*1                                       | Dictionary containing address group definitions                 |
 | suricata_port_groups           | dict[string] | \*2                                       | Dictionary containing port group definitions                    |
 | suricata_rule_path             | path         | /etc/suricata/rules                       | The path to the rules directory                                 |
+| suricata_rule_files            | list[string] |                                           | The rule files suricata should use                              |
+| suricata_extra_rule_files      | list[path]   | []                                        | List of additional rule files to install on the host            |
 | suricata_classification_file   | path         | /etc/suricata/classification.config       | The path to the classification file                             |
 | suricata_reference_config_file | path         | /etc/suricata/reference.config            | The path to the reference config file                           |
 | suricata_threshold_file        | path         |                                           | The path to the threshold config file                           |
