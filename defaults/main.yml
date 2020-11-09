@@ -1,4 +1,85 @@
+# general settings 
+# -------------------------------------------
 suricata_default_tpl: "default_suricata.j2"
 suricata_interface: "eth0"
 suricata_tpl: "suricata.yaml.j2"
-suricata_pcap-log: "yes"
+suricata_pcap_log: yes
+
+# address and port groups
+# -------------------------------------------
+#suricata_home_nets: []
+suricata_external_net: "!$HOME_NET"
+
+suricata_address_groups:
+    HTTP_SERVERS: "$HOME_NET"
+    SMTP_SERVERS: "$HOME_NET"
+    SQL_SERVERS: "$HOME_NET"
+    DNS_SERVERS: "$HOME_NET"
+    TELNET_SERVERS: "$HOME_NET"
+    AIM_SERVERS: "$EXTERNAL_NET"
+    DNP3_SERVER: "$HOME_NET"
+    DNP3_CLIENT: "$HOME_NET"
+    MODBUS_CLIENT: "$HOME_NET"
+    MODBUS_SERVER: "$HOME_NET"
+    ENIP_CLIENT: "$HOME_NET"
+    ENIP_SERVER: "$HOME_NET"
+
+
+suricata_port_groups:
+    HTTP_PORTS: "80"
+    SHELLCODE_PORTS: "!80"
+    ORACLE_PORTS: 1521
+    SSH_PORTS: 22
+    DNP3_PORTS: 20000
+    MODBUS_PORTS: 502
+
+# rule configuration
+# -------------------------------------------
+suricata_rule_path: /etc/suricata/rules
+suricata_classification_file: /etc/suricata/classification.config
+suricata_reference_config_file: /etc/suricata/reference.config
+# suricata_threshold_file: /etc/suricata/threshold.config
+
+suricata_log_dir: /var/log/suricata/
+
+suricata_extra_rule_files: []
+suricata_rule_files:
+    - botcc.rules
+    - ciarmy.rules
+    - compromised.rules
+    - drop.rules
+    - dshield.rules
+    - emerging-attack_response.rules
+    - emerging-chat.rules
+    - emerging-current_events.rules
+    - emerging-dns.rules
+    - emerging-dos.rules
+    - emerging-exploit.rules
+    - emerging-ftp.rules
+    - emerging-imap.rules
+    - emerging-malware.rules
+    - emerging-misc.rules
+    - emerging-mobile_malware.rules
+    - emerging-netbios.rules
+    - emerging-p2p.rules
+    - emerging-policy.rules
+    - emerging-pop3.rules
+    - emerging-rpc.rules
+    - emerging-scan.rules
+    - emerging-shellcode.rules
+    - emerging-smtp.rules
+    - emerging-snmp.rules
+    - emerging-sql.rules
+    - emerging-telnet.rules
+    - emerging-tftp.rules
+    - emerging-trojan.rules
+    - emerging-user_agents.rules
+    - emerging-voip.rules
+    - emerging-web_client.rules
+    - emerging-web_server.rules
+    - emerging-worm.rules
+    - tor.rules
+    - http-events.rules    # available in suricata sources under rules dir
+    - smtp-events.rules    # available in suricata sources under rules dir
+    - dns-events.rules     # available in suricata sources under rules dir
+    - tls-events.rules     # available in suricata sources under rules dir

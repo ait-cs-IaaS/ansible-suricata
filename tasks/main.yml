@@ -9,6 +9,16 @@
     name: suricata
     state: started
 
+- name: Add custom rule files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ suricata_rule_path }}/{{ item | basename }}"
+    mode: "0644"
+    owner: root
+    group: root
+  loop: "{{ suricata_extra_rule_files }}"
+  notify: restart suricata
+
 - name: Configure default file
   template:
           src: "{{ suricata_default_tpl }}"

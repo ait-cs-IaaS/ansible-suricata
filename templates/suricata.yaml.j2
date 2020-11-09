@@ -12,101 +12,42 @@
 vars:
   # more specifc is better for alert accuracy and performance
   address-groups:
+{% if suricata_home_nets is defined %}
+    HOME_NET: "[{{ suricata_home_nets | join(',') }}]"
+{% else %}
     HOME_NET: "[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12]"
-    #HOME_NET: "[192.168.0.0/16]"
-    #HOME_NET: "[10.0.0.0/8]"
-    #HOME_NET: "[172.16.0.0/12]"
-    #HOME_NET: "any"
-
-    EXTERNAL_NET: "!$HOME_NET"
-    #EXTERNAL_NET: "any"
-
-    HTTP_SERVERS: "$HOME_NET"
-    SMTP_SERVERS: "$HOME_NET"
-    SQL_SERVERS: "$HOME_NET"
-    DNS_SERVERS: "$HOME_NET"
-    TELNET_SERVERS: "$HOME_NET"
-    AIM_SERVERS: "$EXTERNAL_NET"
-    DNP3_SERVER: "$HOME_NET"
-    DNP3_CLIENT: "$HOME_NET"
-    MODBUS_CLIENT: "$HOME_NET"
-    MODBUS_SERVER: "$HOME_NET"
-    ENIP_CLIENT: "$HOME_NET"
-    ENIP_SERVER: "$HOME_NET"
+{% endif %}
+    EXTERNAL_NET: "{{ suricata_external_net }}"
+{% for key,val in suricata_address_groups.items() %}
+    {{ key }}: "{{ val }}"
+{% endfor %}
 
   port-groups:
-    HTTP_PORTS: "80"
-    SHELLCODE_PORTS: "!80"
-    ORACLE_PORTS: 1521
-    SSH_PORTS: 22
-    DNP3_PORTS: 20000
-    MODBUS_PORTS: 502
+{% for key,val in suricata_port_groups.items() %}
+    {{ key }}: "{{ val }}"
+{% endfor %}
+
 
 
 ##
 ## Step 2: select the rules to enable or disable
 ##
 
-default-rule-path: /etc/suricata/rules
+default-rule-path: {{ suricata_rule_path }}
 rule-files:
- - botcc.rules
- # - botcc.portgrouped.rules
- - ciarmy.rules
- - compromised.rules
- - drop.rules
- - dshield.rules
-# - emerging-activex.rules
- - emerging-attack_response.rules
- - emerging-chat.rules
- - emerging-current_events.rules
- - emerging-dns.rules
- - emerging-dos.rules
- - emerging-exploit.rules
- - emerging-ftp.rules
-# - emerging-games.rules
-# - emerging-icmp_info.rules
-# - emerging-icmp.rules
- - emerging-imap.rules
-# - emerging-inappropriate.rules
-# - emerging-info.rules
- - emerging-malware.rules
- - emerging-misc.rules
- - emerging-mobile_malware.rules
- - emerging-netbios.rules
- - emerging-p2p.rules
- - emerging-policy.rules
- - emerging-pop3.rules
- - emerging-rpc.rules
-# - emerging-scada.rules
-# - emerging-scada_special.rules
- - emerging-scan.rules
- - emerging-shellcode.rules
- - emerging-smtp.rules
- - emerging-snmp.rules
- - emerging-sql.rules
- - emerging-telnet.rules
- - emerging-tftp.rules
- - emerging-trojan.rules
- - emerging-user_agents.rules
- - emerging-voip.rules
- - emerging-web_client.rules
- - emerging-web_server.rules
-# - emerging-web_specific_apps.rules
- - emerging-worm.rules
- - tor.rules
-# - decoder-events.rules # available in suricata sources under rules dir
-# - stream-events.rules  # available in suricata sources under rules dir
- - http-events.rules    # available in suricata sources under rules dir
- - smtp-events.rules    # available in suricata sources under rules dir
- - dns-events.rules     # available in suricata sources under rules dir
- - tls-events.rules     # available in suricata sources under rules dir
-# - modbus-events.rules  # available in suricata sources under rules dir
-# - app-layer-events.rules  # available in suricata sources under rules dir
-# - dnp3-events.rules       # available in suricata sources under rules dir
+{% for rule_file in suricata_rule_files %}
+  - {{ rule_file }}
+{% endfor %}
 
-classification-file: /etc/suricata/classification.config
-reference-config-file: /etc/suricata/reference.config
-# threshold-file: /etc/suricata/threshold.config
+{% if suricata_classification_file is defined %}
+classification-file: {{ suricata_classification_file }}
+{% endif %}
+{% if suricata_reference_config_file is defined %}
+reference-config-file: {{ suricata_reference_config_file }}
+{% endif %}
+{% if suricata_threshold_file is defined %}
+threshold-file: {{ suricata_threshold_file }}
+{% endif %}
 
 
 ##
@@ -116,7 +57,7 @@ reference-config-file: /etc/suricata/reference.config
 # The default logging directory.  Any log or output file will be
 # placed here if its not specified with a full path name. This can be
 # overridden with the -l command line parameter.
-default-log-dir: /var/log/suricata/
+default-log-dir: {{ suricata_log_dir }}
 
 # global stats configuration
 stats:
@@ -335,7 +276,7 @@ outputs:
   # - encrypted streams after the key exchange
   #
   - pcap-log:
-      enabled: {{ suricata_pcap-log }}
+      enabled: {{ suricata_pcap_log }}
       filename: log.pcap
 
       # File size limit.  Can be specified in kb, mb, gb.  Just a number
