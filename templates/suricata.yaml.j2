@@ -277,16 +277,16 @@ outputs:
   #
   - pcap-log:
       enabled: {{ suricata_pcap_log }}
-      filename: log.pcap
+      filename: {{ suricata_pcap_log_file }}
 
       # File size limit.  Can be specified in kb, mb, gb.  Just a number
       # is parsed as bytes.
-      limit: 1000mb
+      limit: {{ suricata_pcap_log_limit }}
 
       # If set to a value will enable ring buffer mode. Will keep Maximum of "max-files" of size "limit"
-      max-files: 2000
+      max-files: {{ suricata_pcap_log_max_files }}
 
-      mode: normal # normal, multi or sguil.
+      mode: {{ suricata_pcap_log_mode }} # normal, multi or sguil.
 
       # Directory to place pcap files. If not provided the default log
       # directory will be used. Required for "sguil" mode.

@@ -4,6 +4,10 @@ suricata_default_tpl: "default_suricata.j2"
 suricata_interface: "eth0"
 suricata_tpl: "suricata.yaml.j2"
 suricata_pcap_log: yes
+suricata_pcap_log_file: log.pcap
+suricata_pcap_log_limit: 1000mb
+suricata_pcap_log_max_files: 2000
+suricata_pcap_log_mode: normal
 
 # address and port groups
 # -------------------------------------------
