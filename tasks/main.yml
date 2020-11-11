@@ -4,11 +4,6 @@
 #- name: Install suricata-oinkmaster
 #  apt: name=suricata-oinkmaster state=present
 
-- name: Start service suricata, if not started
-  service:
-    name: suricata
-    state: started
-
 - name: Add custom rule files
   copy:
     src: "{{ item }}"
@@ -36,6 +31,11 @@
           owner: "root"
           group: "root"
   notify: restart suricata
+
+- name: Start service suricata, if not started
+  service:
+    name: suricata
+    state: started
 
 # - name: Update Oinkmaster-Rules
 #   shell: oinkmaster -o /etc/suricata/rules/ -C /etc/suricata/suricata-oinkmaster.conf

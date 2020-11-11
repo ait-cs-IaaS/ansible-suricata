@@ -520,11 +520,11 @@ af-packet:
     # Warning: 'checksum-validation' must be set to yes to have any validation
     #checksum-checks: kernel
     # BPF filter to apply to this interface. The pcap filter syntax apply here.
-    {% if suricata_af_packet_bpf_filter is defined and suricata_af_packet_bpf_filter|length %}
+{% if suricata_af_packet_bpf_filter is defined and suricata_af_packet_bpf_filter|length %}
     bpf-filter: "{{ suricata_af_packet_bpf_filter }}"
-    {% else %}
+{% else %}
     #bpf-filter: port 80 or udp
-    {% endif %}
+{% endif %}
     # You can use the following variables to activate AF_PACKET tap or IPS mode.
     # If copy-mode is set to ips or tap, the traffic coming to the current
     # interface will be copied to the copy-iface interface. If 'tap' is set, the
@@ -548,11 +548,11 @@ pcap:
     # as total of memory used by the ring. So set this to something bigger
     # than 1% of your bandwidth.
     #buffer-size: 16777216
-    {% if suricata_pcap_bpf_filter is defined and suricata_pcap_bpf_filter|length %}
+{% if suricata_pcap_bpf_filter is defined and suricata_pcap_bpf_filter|length %}
     bpf-filter: "{{ suricata_pcap_bpf_filter }}"
-    {% else %}
+{% else %}
     #bpf-filter: "tcp and port 25"
-    {% endif %}
+{% endif %}
     # Choose checksum verification mode for the interface. At the moment
     # of the capture, some packets may be with an invalid checksum due to
     # offloading to the network card of the checksum computation.
@@ -1514,11 +1514,11 @@ netmap:
    # Warning: 'checksum-validation' must be set to yes to have any validation
    #checksum-checks: auto
    # BPF filter to apply to this interface. The pcap filter syntax apply here.
-   {% if suricata_netmap_bpf_filter is defined and suricata_netmap_bpf_filter|length %}
+{% if suricata_netmap_bpf_filter is defined and suricata_netmap_bpf_filter|length %}
    bpf-filter: "{{ suricata_netmap_bpf_filter }}"
-   {% else %}
+{% else %}
    #bpf-filter: port 80 or udp
-   {% endif %}
+{% endif %}
  #- interface: eth3
    #threads: auto
    #copy-mode: tap
@@ -1543,11 +1543,11 @@ pfring:
     # Possible values are cluster_flow or cluster_round_robin.
     cluster-type: cluster_flow
     # bpf filter for this interface
-    {% if suricata_pfring_bpf_filter is defined and suricata_pfring_bpf_filter|length %}
+{% if suricata_pfring_bpf_filter is defined and suricata_pfring_bpf_filter|length %}
     bpf-filter: "{{ suricata_pfring_bpf_filter }}"
-    {% else %}
+{% else %}
     #bpf-filter: tcp
-    {% endif %}
+{% endif %}
     # Choose checksum verification mode for the interface. At the moment
     # of the capture, some packets may be with an invalid checksum due to
     # offloading to the network card of the checksum computation.
