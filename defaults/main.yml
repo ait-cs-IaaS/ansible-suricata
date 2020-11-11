@@ -3,11 +3,20 @@
 suricata_default_tpl: "default_suricata.j2"
 suricata_interface: "eth0"
 suricata_tpl: "suricata.yaml.j2"
+
 suricata_pcap_log: yes
 suricata_pcap_log_file: log.pcap
 suricata_pcap_log_limit: 1000mb
 suricata_pcap_log_max_files: 2000
 suricata_pcap_log_mode: normal
+
+# bpf filter rules
+suricata_bpf_filter: ""
+suricata_af_packet_bpf_filter: "{{ suricata_bpf_filter }}"
+suricata_pcap_bpf_filter: "{{ suricata_bpf_filter }}"
+suricata_netmap_bpf_filter: "{{ suricata_bpf_filter }}"
+suricata_pfring_bpf_filter: "{{ suricata_bpf_filter }}"
+
 
 # address and port groups
 # -------------------------------------------
