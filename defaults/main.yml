@@ -1,7 +1,10 @@
 # general settings 
 # -------------------------------------------
+suricata_use_ppa: no
+
 suricata_default_tpl: "default_suricata.j2"
 suricata_interface: "eth0"
+suricata_listenmode: nfqueue
 suricata_tpl: "suricata.yaml.j2"
 
 suricata_pcap_log: yes
@@ -53,7 +56,7 @@ suricata_classification_file: /etc/suricata/classification.config
 suricata_reference_config_file: /etc/suricata/reference.config
 # suricata_threshold_file: /etc/suricata/threshold.config
 
-suricata_log_dir: /var/log/suricata/
+suricata_log_dir: /var/log/suricata
 
 suricata_extra_rule_files: []
 suricata_rule_files:

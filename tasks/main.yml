@@ -1,8 +1,16 @@
-- name: Install suricata
-  apt: name=suricata state=present
 
-#- name: Install suricata-oinkmaster
-#  apt: name=suricata-oinkmaster state=present
+- name: Add suricata ppa repo
+  apt_repository:
+    filename: suricata_repo
+    repo: "ppa:oisf/suricata-stable"
+    state: present
+    update_cache: true
+  when: suricata_use_ppa|bool
+
+- name: Install suricata
+  apt:
+    name: suricata
+    state: present
 
 - name: Add custom rule files
   copy:
@@ -36,7 +44,3 @@
   service:
     name: suricata
     state: started
-
-# - name: Update Oinkmaster-Rules
-#   shell: oinkmaster -o /etc/suricata/rules/ -C /etc/suricata/suricata-oinkmaster.conf
-#   notify: restart suricata
