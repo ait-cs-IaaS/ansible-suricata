@@ -2,8 +2,9 @@
 
 dependencies: []
 galaxy_info:
-  author:              Wolfgang Hotwagner
+  author: Wolfgang Hotwagner
   description: This role installs and configures suricata
+  role_name: suricata
   license: GPL-3.0
   min_ansible_version: 2.1.0
   platforms:
@@ -14,6 +15,7 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - bionic
+        - focal
   categories:
     - system
     - networking
