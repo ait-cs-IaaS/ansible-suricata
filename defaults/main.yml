@@ -1,4 +1,4 @@
-# general settings 
+# general settings
 # -------------------------------------------
 suricata_use_ppa: no
 
@@ -20,7 +20,6 @@ suricata_pcap_bpf_filter: "{{ suricata_bpf_filter }}"
 suricata_netmap_bpf_filter: "{{ suricata_bpf_filter }}"
 suricata_pfring_bpf_filter: "{{ suricata_bpf_filter }}"
 
-
 # address and port groups
 # -------------------------------------------
 #suricata_home_nets: []
@@ -39,7 +38,6 @@ suricata_address_groups:
     MODBUS_SERVER: "$HOME_NET"
     ENIP_CLIENT: "$HOME_NET"
     ENIP_SERVER: "$HOME_NET"
-
 
 suricata_port_groups:
     HTTP_PORTS: "80"
@@ -95,7 +93,7 @@ suricata_rule_files:
     - emerging-web_server.rules
     - emerging-worm.rules
     - tor.rules
-    - http-events.rules    # available in suricata sources under rules dir
-    - smtp-events.rules    # available in suricata sources under rules dir
-    - dns-events.rules     # available in suricata sources under rules dir
-    - tls-events.rules     # available in suricata sources under rules dir
+    - http-events.rules # available in suricata sources under rules dir
+    - smtp-events.rules # available in suricata sources under rules dir
+    - dns-events.rules # available in suricata sources under rules dir
+    - tls-events.rules # available in suricata sources under rules dir

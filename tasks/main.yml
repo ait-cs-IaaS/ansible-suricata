@@ -1,46 +1,57 @@
-
 - name: Add suricata ppa repo
-  apt_repository:
+  become: true
+  ansible.builtin.apt_repository:
     filename: suricata_repo
     repo: "ppa:oisf/suricata-stable"
     state: present
     update_cache: true
-  when: suricata_use_ppa|bool
+  when: suricata_use_ppa | bool
 
 - name: Install suricata
-  apt:
+  become: true
+  ansible.builtin.apt:
     name: suricata
     state: present
 
+- name: Ensure custom rule folder exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ suricata_rule_path }}"
+    state: directory
+
 - name: Add custom rule files
-  copy:
+  become: true
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ suricata_rule_path }}/{{ item | basename }}"
     mode: "0644"
     owner: root
     group: root
   loop: "{{ suricata_extra_rule_files }}"
-  notify: restart suricata
+  notify: Restart suricata
 
 - name: Configure default file
-  template:
-          src: "{{ suricata_default_tpl }}"
-          dest: "/etc/default/suricata"
-          mode: "0644"
-          owner: "root"
-          group: "root"
-  notify: restart suricata
+  become: true
+  ansible.builtin.template:
+    src: "{{ suricata_default_tpl }}"
+    dest: "/etc/default/suricata"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+  notify: Restart suricata
 
 - name: Configure surciata
-  template:
-          src: "{{ suricata_tpl }}"
-          dest: "/etc/suricata/suricata.yaml"
-          mode: "0644"
-          owner: "root"
-          group: "root"
-  notify: restart suricata
+  become: true
+  ansible.builtin.template:
+    src: "{{ suricata_tpl }}"
+    dest: "/etc/suricata/suricata.yaml"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+  notify: Restart suricata
 
 - name: Start service suricata, if not started
-  service:
+  become: true
+  ansible.builtin.service:
     name: suricata
     state: started
